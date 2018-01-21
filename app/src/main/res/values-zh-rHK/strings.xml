@@ -8,4 +8,8 @@
     <string name="loginName">用戶名</string>
     <string name="password">密碼</string>
     <string name="chineseFlag">中國</string>
+    <string name="lab2switch">這是做甚麼的?</string>
+    <string name="radioButton">選單項</string>
+    <string name="checkBox">選多項</string>
+    <string name="camera">相機</string>
 </resources>

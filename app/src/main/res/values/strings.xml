@@ -6,4 +6,8 @@
     <string name="loginName">login name</string>
     <string name="password">password</string>
     <string name="canadianFlag">Canadian Flag</string>
+    <string name="lab2switch">What does this do?</string>
+    <string name="radioButton">Radio Button</string>
+    <string name="checkBox">Check Box</string>
+    <string name="camera">Camera Icon</string>
 </resources>
