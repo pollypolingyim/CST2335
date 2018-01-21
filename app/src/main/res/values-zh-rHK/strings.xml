@@ -4,4 +4,8 @@
     <string name="app_name">AndroidLabs</string>
     <string name="hello_message">你好!</string>
     <string name="ButtonText">我是鍵</string>
+    <string name="login">用戶名</string>
+    <string name="loginName">用戶名</string>
+    <string name="password">密碼</string>
+    <string name="chineseFlag">中國</string>
 </resources>
