@@ -5,9 +5,13 @@
     <string name="login">login</string>
     <string name="loginName">login name</string>
     <string name="password">password</string>
-    <string name="canadianFlag">Canadian Flag</string>
     <string name="lab2switch">What does this do?</string>
     <string name="radioButton">Radio Button</string>
     <string name="checkBox">Check Box</string>
     <string name="camera">Camera Icon</string>
+    <string name="loginButton">Login Button</string>
+    <string name="dialog_message">Do you want to return to the previous page?</string>
+    <string name="dialog_title">hello</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
 </resources>

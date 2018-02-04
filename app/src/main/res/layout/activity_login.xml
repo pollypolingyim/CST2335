@@ -34,7 +34,7 @@
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:ems="1"
         android:inputType="textPassword"
         android:singleLine="true" />
 
@@ -42,9 +42,14 @@
         android:id="@+id/imageView0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/canadianFlag"
         android:src="@drawable/flag"
         android:visibility="visible" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="saveEmail"
+        android:text="@string/loginButton" />
 
 </LinearLayout>
