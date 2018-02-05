@@ -53,7 +53,7 @@ public class ListItemsActivity extends Activity {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ListItemsActivity.this);
                     builder.setCancelable(true);
                     // 2. Chain together various setter methods to set the dialog characteristics
-                    builder.setMessage(R.string.dialog_message) //Add a dialog message to strings.xml
+                    builder.setMessage(R.string.dialog_message)
                             .setTitle(R.string.dialog_title)
                             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
