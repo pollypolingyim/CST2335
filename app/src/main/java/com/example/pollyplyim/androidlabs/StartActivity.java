@@ -25,6 +25,12 @@ public class StartActivity extends Activity {
         startActivityForResult(intent, 50);
     }
 
+    public void startChat (View view){
+        Log.i(ACTIVITY_NAME, "User click start chat!");
+        Intent i = new Intent(this, ChatWindowActivity.class);
+        startActivity(i);
+    }
+
     public void onActivityResult(int requestCode, int responseCode, Intent data){
         if(requestCode==50) {
             Log.i(ACTIVITY_NAME, "Returned to StartActivity.onActivityResult");
