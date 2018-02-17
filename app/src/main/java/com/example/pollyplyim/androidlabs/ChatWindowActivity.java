@@ -1,8 +1,12 @@
 package com.example.pollyplyim.androidlabs;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +20,15 @@ import java.util.ArrayList;
 
 public class ChatWindowActivity extends Activity {
     protected static final String ACTIVITY_NAME = "ChatWindowActivity";
-    ListView listView;
-    EditText editT;
-    Button sendBut;
-    ArrayList<String> chatMsg;
-    ChatAdapter messageAdapter;
-
+    private ListView listView;
+    private EditText editT;
+    private Button sendBut;
+    private ArrayList<String> chatMsg;
+    private ChatAdapter messageAdapter;
+    private ChatDatabaseHelper cdh;
+    private static SQLiteDatabase sld;
+    private ContentValues cv;
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,27 @@ public class ChatWindowActivity extends Activity {
         editT = (EditText) findViewById(R.id.chatWindowEditText);
         sendBut = (Button) findViewById(R.id.sendBut);
         chatMsg = new ArrayList<String>();
+        cdh = new ChatDatabaseHelper(getApplicationContext());
+        sld = cdh.getWritableDatabase();
+        cv = new ContentValues();
+
+        String str = "select "+ ChatDatabaseHelper.KEY_MESSAGE + " from " + ChatDatabaseHelper.TB_NAME;
+        cursor = sld.rawQuery(str, null);
+
+        int colIndex = cursor.getColumnIndex( ChatDatabaseHelper.KEY_MESSAGE );
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast() ){
+            String s = cursor.getString(colIndex);
+            Log.i(ACTIVITY_NAME, "SQL MESSAGE: " +s);
+            chatMsg.add(s);
+            cursor.moveToNext();
+        }
+
+        int n = cursor.getColumnCount();
+        Log.i(ACTIVITY_NAME, "Cursor's column count="+n);
+        for (int i=0; i<n; i++)
+            Log.i(ACTIVITY_NAME,cursor.getColumnName(colIndex));
 
         //in this case, “this” is the ChatWindow, which is-A Context object
         messageAdapter =new ChatAdapter( this );
@@ -40,6 +68,8 @@ public class ChatWindowActivity extends Activity {
     public void sendMsg(View view){
         String msg = editT.getText().toString();
         chatMsg.add(msg);
+        cv.put(ChatDatabaseHelper.KEY_MESSAGE, msg);
+        sld.insert(ChatDatabaseHelper.TB_NAME, "NullCol", cv);
         messageAdapter.notifyDataSetChanged(); //this restarts the process of getCount() & getView()
         editT.setText("");
     }
@@ -72,5 +102,12 @@ public class ChatWindowActivity extends Activity {
              return position;
          }
 
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+        cursor.close();
+        cdh.close();
+        sld.close();
     }
 }
