@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pollyplyim.androidlabs">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -34,6 +36,10 @@
 
         <activity
             android:name=".ChatWindowActivity"
+            android:label="@string/app_name"></activity>
+
+        <activity
+            android:name=".WeatherForecast"
             android:label="@string/app_name"></activity>
     </application>
 

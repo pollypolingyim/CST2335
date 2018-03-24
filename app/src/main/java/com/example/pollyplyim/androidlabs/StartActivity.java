@@ -31,6 +31,12 @@ public class StartActivity extends Activity {
         startActivity(i);
     }
 
+    public void weatherForecast (View view){
+        Log.i(ACTIVITY_NAME, "User clicks weather forecast");
+        Intent i = new Intent(this, WeatherForecast.class);
+        startActivity(i);
+    }
+
     public void onActivityResult(int requestCode, int responseCode, Intent data){
         if(requestCode==50) {
             Log.i(ACTIVITY_NAME, "Returned to StartActivity.onActivityResult");
