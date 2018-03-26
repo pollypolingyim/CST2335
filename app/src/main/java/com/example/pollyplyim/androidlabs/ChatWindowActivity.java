@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -83,6 +84,14 @@ public class ChatWindowActivity extends Activity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void onActivityResult(int requestCode, int responseCode, Intent data){
+        if(responseCode==40){
+            String ID = data.getStringExtra("ID");
+            //don't know how to implement it to delete the message.
+            //and also need to do it for tablet
+        }
     }
 
     public void sendMsg(View view){

@@ -126,6 +126,7 @@ public class WeatherForecast extends Activity {
                     publishProgress(75);
                 }
                 if(name.equals("speed")){
+                    //this one gets null
                     windSp =  parser.getAttributeValue(null, "value");
                 }
 

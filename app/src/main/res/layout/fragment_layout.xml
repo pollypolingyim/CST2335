@@ -8,19 +8,18 @@
     android:orientation="vertical"
     tools:context="com.example.pollyplyim.androidlabs.MessageDetails">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   ID" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/textView2"
         android:text="   Message Here" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView"
-        android:text="   ID" />
 
     <Button
         android:id="@+id/button4"

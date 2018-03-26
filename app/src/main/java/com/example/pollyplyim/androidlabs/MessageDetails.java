@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 /**
  * Created by pollyplyim on 2018-03-24.
  */
 
 public class MessageDetails extends Activity {
-    FragmentTransaction fragmentTransaction;
+    private FragmentTransaction fragmentTransaction;
+
+
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_details);
