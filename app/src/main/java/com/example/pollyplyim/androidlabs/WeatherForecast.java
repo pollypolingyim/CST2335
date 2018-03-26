@@ -59,7 +59,7 @@ public class WeatherForecast extends Activity {
     }
 
     class ForecastQuery extends AsyncTask<String, Integer, String> {
-        String windSpeed;
+        String windSp;
         String minTemp;
         String maxTemp;
         String currTemp;
@@ -76,6 +76,7 @@ public class WeatherForecast extends Activity {
             currentTemp.setText("current temp: "+currTemp+degree+"C");
             minimumTemp.setText("minimum temp: "+minTemp+degree+"C");
             maximumTemp.setText("maximum temp: "+maxTemp+degree+"C");
+            windSpeed.setText("wind speed: " + windSp);
             weatherImage.setImageBitmap(weatherPic);
             progressBar.setVisibility(View.INVISIBLE);
         }

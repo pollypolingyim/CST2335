@@ -3,6 +3,7 @@ package com.example.pollyplyim.androidlabs;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,9 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +26,7 @@ public class ChatWindowActivity extends Activity {
     private ListView listView;
     private EditText editT;
     private Button sendBut;
+    private FrameLayout frame;
     private ArrayList<String> chatMsg;
     private ChatAdapter messageAdapter;
     private ChatDatabaseHelper cdh;
@@ -37,12 +41,19 @@ public class ChatWindowActivity extends Activity {
         listView = (ListView)findViewById(R.id.chatList);
         editT = (EditText) findViewById(R.id.chatWindowEditText);
         sendBut = (Button) findViewById(R.id.sendBut);
+        frame =(FrameLayout) findViewById(R.id.frameLayout1);
         chatMsg = new ArrayList<String>();
         cdh = new ChatDatabaseHelper(getApplicationContext());
         sld = cdh.getWritableDatabase();
         cv = new ContentValues();
 
-        String str = "select "+ ChatDatabaseHelper.KEY_MESSAGE + " from " + ChatDatabaseHelper.TB_NAME;
+        if(frame!=null)
+            Log.i(ACTIVITY_NAME, "frame layout has loaded successfully");
+        if(frame==null)
+            Log.i(ACTIVITY_NAME, "frame layout did not load");
+
+        String str = "select "+ ChatDatabaseHelper.KEY_ID + ", "+
+                ChatDatabaseHelper.KEY_MESSAGE + " from " + ChatDatabaseHelper.TB_NAME;
         cursor = sld.rawQuery(str, null);
 
         int colIndex = cursor.getColumnIndex( ChatDatabaseHelper.KEY_MESSAGE );
@@ -63,6 +74,17 @@ public class ChatWindowActivity extends Activity {
         //in this case, “this” is the ChatWindow, which is-A Context object
         messageAdapter =new ChatAdapter( this );
         listView.setAdapter (messageAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(),MessageDetails.class);
+                //instead of put extra, should I pass a bundle to the new activity?
+                //how do I create a bundle for the ID and the message.
+                intent.putExtra("ID",id);
+                intent.putExtra("Message", messageAdapter.getItem(position));
+                startActivity(intent);
+            }
+        });
     }
 
     public void sendMsg(View view){
@@ -101,7 +123,11 @@ public class ChatWindowActivity extends Activity {
          public long getId(int position){
              return position;
          }
-
+         public long getItemId(int position){
+             cursor.moveToPosition(position);
+             int colIndex = cursor.getColumnIndex( ChatDatabaseHelper.KEY_ID );
+             return cursor.getLong(colIndex);
+         }
     }
 
     public void onDestroy(){

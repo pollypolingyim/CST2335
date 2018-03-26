@@ -3,6 +3,7 @@
     package="com.example.pollyplyim.androidlabs">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <supports-screens android:requiresSmallestWidthDp="600" />
 
     <uses-feature
         android:name="android.hardware.camera"
