@@ -14,7 +14,9 @@ public class MessageDetails extends Activity {
     protected void onCreate (Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.message_details);
-        if(isTablet) { // how do I identify if it is a phone or a tablet
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+
+        if(isTablet) {
             fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.frame_layout,
                     (MessageFragment) getFragmentManager().findFragmentById(R.id.fragment_layout))
@@ -22,12 +24,7 @@ public class MessageDetails extends Activity {
                                 .commit();
         }
         else{
-            //what should I put in the first parameter?
-            startActivity(new Intent(getContext(),MessageFragment.class), savedInstanceState);
+            startActivity(new Intent(this, MessageDetails.class), savedInstanceState);
         }
     }
-
-
-
-
 }

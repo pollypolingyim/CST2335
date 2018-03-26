@@ -125,6 +125,9 @@ public class WeatherForecast extends Activity {
                     maxTemp = parser.getAttributeValue(null, "max");
                     publishProgress(75);
                 }
+                if(name.equals("speed")){
+                    windSp =  parser.getAttributeValue(null, "value");
+                }
 
                 if (name.equals("weather")){
                     String iconName =parser.getAttributeValue(null, "icon");

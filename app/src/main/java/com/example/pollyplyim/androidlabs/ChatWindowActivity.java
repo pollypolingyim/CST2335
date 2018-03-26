@@ -78,9 +78,7 @@ public class ChatWindowActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(),MessageDetails.class);
-                //instead of put extra, should I pass a bundle to the new activity?
-                //how do I create a bundle for the ID and the message.
-                intent.putExtra("ID",id);
+                intent.putExtra("ID",0);
                 intent.putExtra("Message", messageAdapter.getItem(position));
                 startActivity(intent);
             }
