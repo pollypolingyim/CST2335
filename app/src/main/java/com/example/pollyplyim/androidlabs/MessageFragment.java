@@ -19,21 +19,35 @@ public class MessageFragment extends Fragment {
     private Button deleteButton;
 
 
+    public static MessageFragment newInstance(long id, String message) {
+        Bundle args = new Bundle();
+        args.putLong("ID", id);
+        args.putString("Message", message);
+        MessageFragment fragment = new MessageFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_layout, container, false);
         //getIntent() turns red
-        ID = ((TextView) view.findViewById(R.id.textView2)).setText(getIntent().getExtras().getString("ID"));
-        msg = ((TextView)view.findViewById(R.id.textView)).setText(getIntent().getExtras().getString("Message"));
-        deleteButton = (Button)view.findViewById(R.id.button4);
-        deleteButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                //did I implement it correctly?
-                int resultCode =40;
-                Intent intent = new Intent(view.getContext(),ChatWindowActivity.class);
-                intent.putExtra("ID",0);
-                getActivity().setResult(resultCode, intent);
+
+        final long id = getArguments().getLong("ID", 0);
+        String message = getArguments().getString("Message");
+
+        ((TextView) view.findViewById(R.id.textView2)).setText(String.valueOf(id));
+        ((TextView) view.findViewById(R.id.textView)).setText(message);
+
+        deleteButton = (Button) view.findViewById(R.id.button4);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (getActivity() instanceof MessageDetails) {
+                    ((MessageDetails) getActivity()).deleteMessageWithId(id);
+                } else {
+                    ((ChatWindowActivity) getActivity()).deleteMessageWithId(id);
+                }
             }
         });
 

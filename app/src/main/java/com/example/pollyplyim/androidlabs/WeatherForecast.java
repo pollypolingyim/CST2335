@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -110,57 +109,51 @@ public class WeatherForecast extends Activity {
         }
 
         private void readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-            //parser.require(XmlPullParser.START_TAG, ns, "feed");
-            while (parser.next() != XmlPullParser.END_TAG) {
-                if (parser.getEventType() != XmlPullParser.START_TAG) {
-                    continue;
-                }
-                String name = parser.getName();
-                // Starts by looking for the entry tag
-                if (name.equals("temperature")) {
-                    currTemp = parser.getAttributeValue(null, "value");
-                    publishProgress(25);
-                    minTemp = parser.getAttributeValue(null, "min");
-                    publishProgress(50);
-                    maxTemp = parser.getAttributeValue(null, "max");
-                    publishProgress(75);
-                }
-                if(name.equals("speed")){
-                    //this one gets null
-                    windSp =  parser.getAttributeValue(null, "value");
-                }
-
-                if (name.equals("weather")){
-                    String iconName =parser.getAttributeValue(null, "icon");
-                    String iconFile =iconName+".png";
-                    if (fileExistance(iconFile)) {
-                        FileInputStream fis = null;
-                        try {
-                            fis =openFileInput(iconFile);
-                        }
-                        catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        weatherPic = BitmapFactory.decodeStream(fis);
-                        Log.i("Weather Forecast", "found the image locally: "+iconFile);
+            int eventType;
+            while ((eventType = parser.getEventType()) != XmlPullParser.END_DOCUMENT) {
+                if (eventType == XmlPullParser.START_TAG) {
+                    if (parser.getName().equalsIgnoreCase("temperature")) {
+                        currTemp = parser.getAttributeValue(null, "value");
+                        publishProgress(25);
+                        minTemp = parser.getAttributeValue(null, "min");
+                        publishProgress(50);
+                        maxTemp = parser.getAttributeValue(null, "max");
+                        publishProgress(75);
                     }
-                    else {
-                        String imageURL = "http://openweathermap.org/img/w/" + iconName + ".png";
-                        Bitmap weatherPic = getImage(imageURL);
-                        FileOutputStream outputStream = openFileOutput(iconName + ".png", Context.MODE_PRIVATE);
-
-                        weatherPic.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-                        outputStream.flush();
-                        outputStream.close();
-                        Log.i("Weather Forecast", "need to download the image: " + iconName);
+                    if (parser.getName().equals("speed")) {
+                        windSp = parser.getAttributeValue(null, "value");
                     }
-                    publishProgress(100);
-                }
+                    if (parser.getName().equals("weather")) {
+                        String iconName = parser.getAttributeValue(null, "icon");
+                        String iconFile = iconName + ".png";
+                        if (fileExistance(iconFile)) {
+                            FileInputStream fis = null;
+                            try {
+                                fis = openFileInput(iconFile);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                            weatherPic = BitmapFactory.decodeStream(fis);
+                            Log.i("Weather Forecast", "found the image locally: " + iconFile);
+                        } else {
+                            String imageURL = "http://openweathermap.org/img/w/" + iconName + ".png";
+                            Bitmap weatherPic = getImage(imageURL);
+                            FileOutputStream outputStream = openFileOutput(iconName + ".png", Context.MODE_PRIVATE);
 
-                else {
-                    skip(parser);
+                            weatherPic.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+                            outputStream.flush();
+                            outputStream.close();
+                            Log.i("Weather Forecast", "need to download the image: " + iconName);
+                        }
+                        publishProgress(100);
+                    }
                 }
+                else if (eventType == XmlPullParser.END_TAG) {
+
+                }
+                parser.next();
             }
+
         }
 
         private boolean fileExistance(String fname){
@@ -195,21 +188,5 @@ public class WeatherForecast extends Activity {
             }
         }
 
-        private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                throw new IllegalStateException();
-            }
-            int depth = 1;
-            while (depth != 0) {
-                switch (parser.next()) {
-                    case XmlPullParser.END_TAG:
-                        depth--;
-                        break;
-                    case XmlPullParser.START_TAG:
-                        depth++;
-                        break;
-                }
-            }
-        }
     }
 }
