@@ -31,6 +31,12 @@ public class StartActivity extends Activity {
         startActivity(i);
     }
 
+    public void goToTesttoolbar (View view){
+        Log.i(ACTIVITY_NAME, "User clicks test toolbar");
+        Intent intent = new Intent(this, TestToolbar.class);
+        startActivity(intent);
+    }
+
     public void weatherForecast (View view){
         Log.i(ACTIVITY_NAME, "User clicks weather forecast");
         Intent i = new Intent(this, WeatherForecast.class);

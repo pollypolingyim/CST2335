@@ -135,7 +135,8 @@ public class WeatherForecast extends Activity {
                             }
                             weatherPic = BitmapFactory.decodeStream(fis);
                             Log.i("Weather Forecast", "found the image locally: " + iconFile);
-                        } else {
+                        }
+                        else {
                             String imageURL = "http://openweathermap.org/img/w/" + iconName + ".png";
                             Bitmap weatherPic = getImage(imageURL);
                             FileOutputStream outputStream = openFileOutput(iconName + ".png", Context.MODE_PRIVATE);
