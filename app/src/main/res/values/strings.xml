@@ -24,6 +24,8 @@
     <string name="choice3">choice3</string>
     <string name="setting">about</string>
     <string name="title_activity_settings">Settings</string>
+    <string name ="toolbar_title">Do you want to go back?</string>
+    <string name="msg">Message</string>
 
     <!-- Strings related to Settings -->
 
