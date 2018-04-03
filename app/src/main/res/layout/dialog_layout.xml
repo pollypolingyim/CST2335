@@ -9,7 +9,7 @@
         android:background="#FFFFBB33"
         android:contentDescription="@string/app_name"
         android:scaleType="center"
-        android:src="@drawable/headerLogo" />
+        android:src="@drawable/header" />
 
     <EditText
         android:id="@+id/snackbar_msg"
