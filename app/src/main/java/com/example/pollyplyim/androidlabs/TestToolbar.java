@@ -76,7 +76,7 @@ public class TestToolbar extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 EditText edt = (EditText)findViewById(R.id.snackbar_msg);
-                                Snackbar.setText(edt.getText().toString());
+                                //Snackbar.setText(edt.getText().toString());
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
