@@ -6,27 +6,27 @@
         android:id="@+id/action_one"
         android:icon="@drawable/plastic_50_50"
         android:orderInCategory="51"
-        compat:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/choice1" />
 
     <item
         android:id="@+id/action_two"
         android:icon="@drawable/plastic_50_50"
         android:orderInCategory="101"
-        compat:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/choice2" />
 
     <item
         android:id="@+id/action_three"
         android:icon="@drawable/plastic_50_50"
         android:orderInCategory="151"
-        compat:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/choice3" />
 
     <item
         android:id="@+id/action_four"
         android:orderInCategory="201"
-        compat:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/setting" />
 
 </menu>

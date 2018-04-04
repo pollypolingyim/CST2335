@@ -1,7 +1,9 @@
 package com.example.pollyplyim.androidlabs;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class TestToolbar extends AppCompatActivity {
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +29,7 @@ public class TestToolbar extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +49,9 @@ public class TestToolbar extends AppCompatActivity {
         switch(id){
             case R.id.action_one:
                 Log.d("Toolbar", "Option 1 selected");
-                Snackbar.make(getCurrentFocus(), "You selected item 1", Snackbar.LENGTH_LONG)
+                SharedPreferences sharedPref = getSharedPreferences("newMessage", Context.MODE_PRIVATE);
+                String str = sharedPref.getString("newMessage", "You selected item 1");
+                Snackbar.make(fab, str, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
                 break;
@@ -70,13 +75,17 @@ public class TestToolbar extends AppCompatActivity {
             case R.id.action_three:
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
                 LayoutInflater inflater = this.getLayoutInflater();
-                builder2.setView(inflater.inflate(R.layout.dialog_layout, null))
+                View v = inflater.inflate(R.layout.dialog_layout, null);
+                final EditText edt =  v.findViewById(R.id.snackbar_msg) ;
+                builder2.setView(v)
                         // Add action buttons
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                EditText edt = (EditText)findViewById(R.id.snackbar_msg);
-                                //Snackbar.setText(edt.getText().toString());
+                                SharedPreferences sharedPref = getSharedPreferences("newMessage", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor edit = sharedPref.edit();
+                                edit.putString("newMessage", edt.getText().toString());
+                                edit.apply();
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -84,6 +93,7 @@ public class TestToolbar extends AppCompatActivity {
 
                             }
                         });
+                builder2.show();
 
                 break;
             case R.id.action_four:
